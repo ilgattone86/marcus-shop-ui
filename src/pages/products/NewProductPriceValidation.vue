@@ -1,7 +1,5 @@
 <script setup>
-import { computed } from "vue"
-
-const props = defineProps({
+defineProps({
   price: { type: Number, default: 0 },
   errors: { type: Array, default: [] },
   loading: { type: Boolean, default: false },
@@ -20,13 +18,11 @@ const props = defineProps({
   </div>
   <div v-else>
     <div class="bg-sky-100 border border-sky-500 p-2 rounded-md text-sm font-medium">
-      <span>
-        The price for this configuration is:
-        <v-icon v-if="loading" name="pr-spinner" class="ml-1 animate-spin" />
+      <div class="flex items-center">
+        <span class="mr-1">The price for this configuration is:</span>
+        <v-icon v-if="loading" name="pr-spinner" class="w-4 animate-spin" />
         <span v-else>{{ price }}</span>
-      </span>
+      </div>
     </div>
   </div>
 </template>
-
-<style scoped></style>

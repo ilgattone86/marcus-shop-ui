@@ -5,12 +5,12 @@ import { cloneFnJSON } from "@vueuse/core"
 // Composables
 import usePriceRules from "@/composables/priceRules/index.js"
 // Components
+import UpsertModal from "./UpsertModal.vue"
 import AppButton from "@/components/AppButton.vue"
 import AppDeleteModal from "@/components/AppDeleteModal.vue"
 import ManagerTable from "@/pages/settings/ManagerTable.vue"
 import ManagerTitle from "@/pages/settings/ManagerTitle.vue"
 import ManagerWrapper from "@/pages/settings/ManagerWrapper.vue"
-import UpsertModal from "./UpsertModal.vue"
 
 const { priceRules, createPriceRule, deletePriceRule, editPriceRule } = usePriceRules()
 
@@ -36,16 +36,18 @@ function onCreate() {
 
 function createEntity() {
   createPriceRule({
+    baseOption: priceRuleToCreate.value.baseOption.id,
     dependentOption: priceRuleToCreate.value.dependentOption.id,
-    blockedOption: priceRuleToCreate.value.blockedOption.id,
+    priceAdjustment: priceRuleToCreate.value.priceAdjustment,
   }).then(() => (priceRuleToCreate.value = null))
 }
 
 function updateEntity() {
   editPriceRule({
     priceRule: priceRuleToEdit.value.id,
-    dependentOption: priceRuleToEdit.value.dependenOption.id,
-    blockedOption: priceRuleToEdit.value.blockedOption.id,
+    baseOption: priceRuleToEdit.value.baseOption.id,
+    dependentOption: priceRuleToEdit.value.dependentOption.id,
+    priceAdjustment: priceRuleToEdit.value.priceAdjustment,
   }).then(() => (priceRuleToEdit.value = null))
 }
 
@@ -73,5 +75,5 @@ function deleteEntity() {
   </ManagerWrapper>
   <UpsertModal v-if="!!priceRuleToCreate" @close="priceRuleToCreate = null" v-model="priceRuleToCreate" @save="createEntity" />
   <UpsertModal v-if="!!priceRuleToEdit" @close="priceRuleToEdit = null" v-model="priceRuleToEdit" @save="updateEntity" />
-  <AppDeleteModal :entity-name="priceRuleToDelete.name" v-if="!!priceRuleToDelete" @close="priceRuleToDelete = null" @delete="deleteEntity" />
+  <AppDeleteModal v-if="!!priceRuleToDelete" @close="priceRuleToDelete = null" @delete="deleteEntity" />
 </template>

@@ -44,5 +44,3 @@ const dependentOptions = computed(() => {
     </div>
   </AppModal>
 </template>
-
-<style scoped></style>

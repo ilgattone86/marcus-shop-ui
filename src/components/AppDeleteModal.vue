@@ -1,7 +1,9 @@
 <script setup>
+// Libraries
+import { computed } from "vue"
+// Components
 import AppModal from "@/components/AppModal.vue"
 import AppButton from "@/components/AppButton.vue"
-import { computed } from "vue"
 
 const emits = defineEmits(["delete", "close"])
 const props = defineProps({
@@ -25,5 +27,3 @@ const title = computed(() => `Do you really want to delete${props.entityName ? "
     </div>
   </AppModal>
 </template>
-
-<style scoped></style>

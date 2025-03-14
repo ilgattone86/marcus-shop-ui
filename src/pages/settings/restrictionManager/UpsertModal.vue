@@ -1,9 +1,11 @@
 <script setup>
+// Libraries
+import { computed } from "vue"
+// Composables
+import usePartOptions from "@/composables/partOptions/index.js"
+// Components
 import AppModal from "@/components/AppModal.vue"
 import AppButton from "@/components/AppButton.vue"
-import useCategories from "@/composables/categories/index.js"
-import usePartOptions from "@/composables/partOptions/index.js"
-import { computed, watch } from "vue"
 
 const emits = defineEmits(["save", "close"])
 const model = defineModel()
@@ -40,5 +42,3 @@ const blockedOptions = computed(() => {
     </div>
   </AppModal>
 </template>
-
-<style scoped></style>

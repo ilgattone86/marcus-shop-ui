@@ -1,8 +1,8 @@
 import gql from "graphql-tag"
 
 export default gql`
-  query GetAllProducts {
-    allProducts {
+  query GetProducts {
+    products {
       id
       name
       description

@@ -1,14 +1,15 @@
 import gql from "graphql-tag"
 
 export default gql`
-  mutation EditPriceRule($restriction: ID!, $dependentOption: ID!, $blockedOption: ID!) {
-    editPriceRule(restriction: $restriction, dependentOption: $dependentOption, blockedOption: $blockedOption) {
+  mutation EditPriceRule($priceRule: ID!, $priceAdjustment: Float!, $baseOption: ID!, $dependentOption: ID!) {
+    editPriceRule(priceRule: $priceRule, baseOption: $baseOption, dependentOption: $dependentOption, priceAdjustment: $priceAdjustment) {
       id
-      dependentOption {
+      priceAdjustment
+      baseOption {
         id
         name
       }
-      blockedOption {
+      dependentOption {
         id
         name
       }

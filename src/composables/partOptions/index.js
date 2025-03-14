@@ -14,6 +14,18 @@ export default function usePartOptions() {
   const { mutate: deletePartOption } = useMutation(deletePartOptionOperation, { update: deletePartOptionFromCache })
 
   const partOptions = computed(() => result.value?.partOptions || [])
+  const partOptionsGroupedByPart = computed(() => {
+    if (!partOptions.value) return {}
+
+    return partOptions.value.reduce((acc, partOption) => {
+      const partId = partOption.part.id
+      if (!acc[partId]) acc[partId] = []
+
+      acc[partId].push(partOption)
+
+      return acc
+    }, {})
+  })
 
   function addCreatedPartOptionToCache(cache, { data: { createPartOption } }) {
     let data = cache.readQuery({ query: getPartOptionsOperation })
@@ -34,11 +46,12 @@ export default function usePartOptions() {
   }
 
   return {
-    partOptions,
     error,
     loading,
+    partOptions,
     editPartOption,
     createPartOption,
     deletePartOption,
+    partOptionsGroupedByPart,
   }
 }

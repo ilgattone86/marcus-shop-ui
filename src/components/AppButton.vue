@@ -1,4 +1,5 @@
 <script setup>
+// Libraries
 import { computed } from "vue"
 
 const props = defineProps({

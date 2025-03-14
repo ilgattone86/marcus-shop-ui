@@ -1,4 +1,5 @@
 <script setup>
+// Libraries
 import { onKeyStroke } from "@vueuse/core"
 
 const props = defineProps({

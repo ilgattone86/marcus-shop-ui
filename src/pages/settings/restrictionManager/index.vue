@@ -5,12 +5,12 @@ import { cloneFnJSON } from "@vueuse/core"
 // Composables
 import useRestrictions from "@/composables/restrictions/index.js"
 // Components
+import UpsertModal from "./UpsertModal.vue"
 import AppButton from "@/components/AppButton.vue"
 import AppDeleteModal from "@/components/AppDeleteModal.vue"
 import ManagerTable from "@/pages/settings/ManagerTable.vue"
 import ManagerTitle from "@/pages/settings/ManagerTitle.vue"
 import ManagerWrapper from "@/pages/settings/ManagerWrapper.vue"
-import UpsertModal from "./UpsertModal.vue"
 
 const { restrictions, createRestriction, deleteRestriction, editRestriction } = useRestrictions()
 
@@ -43,7 +43,7 @@ function createEntity() {
 function updateEntity() {
   editRestriction({
     restriction: restrictionToEdit.value.id,
-    dependentOption: restrictionToEdit.value.dependenOption.id,
+    dependentOption: restrictionToEdit.value.dependentOption.id,
     blockedOption: restrictionToEdit.value.blockedOption.id,
   }).then(() => (restrictionToEdit.value = null))
 }

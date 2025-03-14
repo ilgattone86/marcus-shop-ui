@@ -1,16 +1,16 @@
 <script setup>
 // Libraries
 import { ref } from "vue"
+import { cloneFnJSON } from "@vueuse/core"
 // Composables
 import useParts from "@/composables/parts/index.js"
 // Components
+import UpsertModal from "./UpsertModal.vue"
 import AppButton from "@/components/AppButton.vue"
+import AppDeleteModal from "@/components/AppDeleteModal.vue"
 import ManagerTable from "@/pages/settings/ManagerTable.vue"
 import ManagerTitle from "@/pages/settings/ManagerTitle.vue"
 import ManagerWrapper from "@/pages/settings/ManagerWrapper.vue"
-import { cloneFnJSON } from "@vueuse/core"
-import UpsertModal from "@/pages/settings/partManager/UpsertModal.vue"
-import AppDeleteModal from "@/components/AppDeleteModal.vue"
 
 const { parts, createPart, deletePart, editPart } = useParts()
 
@@ -43,7 +43,7 @@ function deleteEntity() {
   <ManagerWrapper>
     <ManagerTitle title="Parts" />
     <ManagerTable :rows="parts" @edit="onEdit" @delete="onDelete" />
-    <AppButton text="Add new part" class="w-fit ml-auto mr-2 mb-2" @click="partToCreate = { name: '' }" />
+    <AppButton text="Add new part" class="ml-auto mr-2 mb-2" @click="partToCreate = { name: '' }" />
   </ManagerWrapper>
   <UpsertModal v-if="!!partToCreate" @close="partToCreate = null" v-model="partToCreate" @save="createEntity" />
   <UpsertModal v-if="!!partToEdit" @close="partToEdit = null" v-model="partToEdit" @save="updateEntity" />

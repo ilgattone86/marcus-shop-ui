@@ -5,6 +5,7 @@ export default gql`
     partOptions(productId: $productId) {
       id
       name
+      price
       part {
         id
         name

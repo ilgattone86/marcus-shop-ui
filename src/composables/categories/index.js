@@ -10,7 +10,7 @@ import createCategoryOperation from "./operations/createCategory.js"
 export default function useCategories() {
   const { loading, error, result } = useQuery(getCategoriesOperation, null, { fetchPolicy: "cache-first" })
   const { mutate: editCategory } = useMutation(editCategoryOperation)
-  const { mutate: deleteCategory } = useMutation(deleteCategoryOperation)
+  const { mutate: deleteCategory } = useMutation(deleteCategoryOperation, { update: deleteCategoryFromCache })
   const { mutate: createCategory } = useMutation(createCategoryOperation, { update: addCreatedCategoryToCache })
 
   const categories = computed(() => result.value?.categories || [])
@@ -20,6 +20,15 @@ export default function useCategories() {
     data = {
       ...data,
       categories: [...data.categories, { ...createCategory }],
+    }
+    cache.writeQuery({ query: getCategoriesOperation, data })
+  }
+
+  function deleteCategoryFromCache(cache, { data: { deleteCategory } }) {
+    let data = cache.readQuery({ query: getCategoriesOperation })
+    data = {
+      ...data,
+      categories: data.categories.filter((category) => category.id !== deleteCategory.id),
     }
     cache.writeQuery({ query: getCategoriesOperation, data })
   }

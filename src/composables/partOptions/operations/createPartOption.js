@@ -5,6 +5,11 @@ export default gql`
     createPartOption(name: $name, price: $price, part: $part) {
       id
       name
+      price
+      part {
+        id
+        name
+      }
     }
   }
 `

@@ -1,4 +1,5 @@
 <script setup>
+// Composables
 import useUserPermissions from "@/composables/permissions/index.js"
 
 const { hasPermissions } = useUserPermissions(["settings"])
@@ -15,5 +16,3 @@ const commonClasses = "rounded px-2 py-1 text-slate-500 transition-colors durati
     </RouterLink>
   </nav>
 </template>
-
-<style scoped></style>

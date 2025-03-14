@@ -1,7 +1,9 @@
 <script setup>
+// Composables
+import useParts from "@/composables/parts/index.js"
+// Components
 import AppModal from "@/components/AppModal.vue"
 import AppButton from "@/components/AppButton.vue"
-import useParts from "@/composables/parts/index.js"
 
 const emits = defineEmits(["save", "close"])
 const model = defineModel()
@@ -30,9 +32,7 @@ const { parts } = useParts()
         <input type="number" id="price" class="py-1 px-2 w-full border rounded border-slate-500" v-model="model.price" placeholder="Choose a price for the part option" />
       </section>
 
-      <AppButton text="Save part option" class="w-fit ml-auto" @click="emits('save')" />
+      <AppButton text="Save part option" class="ml-auto" @click="emits('save')" />
     </div>
   </AppModal>
 </template>
-
-<style scoped></style>

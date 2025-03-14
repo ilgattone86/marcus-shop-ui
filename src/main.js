@@ -1,14 +1,13 @@
-import "./assets/main.css"
-
+// Libraries
 import { createApp, h, provide } from "vue"
-import App from "./App.vue"
 import { DefaultApolloClient } from "@vue/apollo-composable"
-import { OhVueIcon, addIcons } from "oh-vue-icons"
-import { PrSpinner, MdKeyboardarrowdownRound, IoWarning, IoCloseCircle, BiBicycle, BiLockFill, BiUnlockFill, MdEditRound, MdDeleteRound } from "oh-vue-icons/icons"
+import OhVueIcon from "./icon"
 import { router } from "./routes"
 import apolloClient from "./apollo"
-
-addIcons(PrSpinner, MdKeyboardarrowdownRound, IoWarning, IoCloseCircle, BiBicycle, BiLockFill, BiUnlockFill, MdEditRound, MdDeleteRound)
+// Css
+import "./assets/main.css"
+// Components
+import App from "./App.vue"
 
 const app = createApp({
   setup() {

@@ -7,8 +7,8 @@ import createPartOperation from "./operations/createPart.js"
 import editPartOperation from "./operations/editPart.js"
 import deletePartOperation from "./operations/deletePart.js"
 
-export default function useParts() {
-  const { loading, error, result } = useQuery(getPartsOperation, null, { fetchPolicy: "cache-first" })
+export default function useParts(productId) {
+  const { loading, error, result } = useQuery(getPartsOperation, { productId })
   const { mutate: createPart } = useMutation(createPartOperation, { update: addCreatedPartToCache })
   const { mutate: editPart } = useMutation(editPartOperation)
   const { mutate: deletePart } = useMutation(deletePartOperation, { update: deletePartFromCache })
