@@ -11,6 +11,7 @@ export default gql`
         partOptions {
           id
           name
+          stock
         }
       }
     }

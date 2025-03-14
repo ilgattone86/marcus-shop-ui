@@ -32,6 +32,11 @@ const { parts } = useParts()
         <input type="number" id="price" class="py-1 px-2 w-full border rounded border-slate-500" v-model="model.price" placeholder="Choose a price for the part option" />
       </section>
 
+      <section>
+        <label for="stock">Stock:</label>
+        <input type="checkbox" id="stock" class="py-1 px-2 ml-2 border rounded border-slate-500" v-model="model.stock" />
+      </section>
+
       <AppButton text="Save part option" class="ml-auto" @click="emits('save')" />
     </div>
   </AppModal>

@@ -27,23 +27,25 @@ function onDelete(row) {
 }
 
 function onCreate() {
-  partOptionToCreate.value = { name: "", price: 0, part: { id: "" } }
+  partOptionToCreate.value = { name: "", price: 0, stock: true, part: { id: "" } }
 }
 
 function createEntity() {
   createPartOption({
     name: partOptionToCreate.value.name,
-    part: partOptionToCreate.value.part.id,
     price: partOptionToCreate.value.price,
+    stock: partOptionToCreate.value.stock,
+    part: partOptionToCreate.value.part.id,
   }).then(() => (partOptionToCreate.value = null))
 }
 
 function updateEntity() {
   editPartOption({
-    partOption: partOptionToEdit.value.id,
     name: partOptionToEdit.value.name,
     price: partOptionToEdit.value.price,
+    stock: partOptionToEdit.value.stock,
     part: partOptionToEdit.value.part.id,
+    partOption: partOptionToEdit.value.id,
   }).then(() => (partOptionToEdit.value = null))
 }
 
@@ -59,11 +61,16 @@ function deleteEntity() {
       <template #tableHeader>
         <th>Name</th>
         <th>Part</th>
+        <th>Stock</th>
         <th>Price</th>
       </template>
       <template #tableRow="{ row }">
         <td class="text-center">{{ row.name }}</td>
         <td class="text-center">{{ row.part.name }}</td>
+        <td class="text-center">
+          <v-icon name="bi-check-lg" v-if="row.stock" class="text-green-500" />
+          <v-icon name="md-close" v-else class="text-red-500" />
+        </td>
         <td class="text-center">{{ row.price }}</td>
       </template>
     </ManagerTable>
