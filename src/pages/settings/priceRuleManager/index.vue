@@ -3,7 +3,7 @@
 import { ref } from "vue"
 import { cloneFnJSON } from "@vueuse/core"
 // Composables
-import useRestrictions from "@/composables/restrictions/index.js"
+import usePriceRules from "@/composables/priceRules/index.js"
 // Components
 import AppButton from "@/components/AppButton.vue"
 import AppDeleteModal from "@/components/AppDeleteModal.vue"
@@ -12,63 +12,66 @@ import ManagerTitle from "@/pages/settings/ManagerTitle.vue"
 import ManagerWrapper from "@/pages/settings/ManagerWrapper.vue"
 import UpsertModal from "./UpsertModal.vue"
 
-const { restrictions, createRestriction, deleteRestriction, editRestriction } = useRestrictions()
+const { priceRules, createPriceRule, deletePriceRule, editPriceRule } = usePriceRules()
 
-const restrictionToCreate = ref(null)
-const restrictionToEdit = ref(null)
-const restrictionToDelete = ref(null)
+const priceRuleToCreate = ref(null)
+const priceRuleToEdit = ref(null)
+const priceRuleToDelete = ref(null)
 
 function onEdit(row) {
-  restrictionToEdit.value = cloneFnJSON(row)
+  priceRuleToEdit.value = cloneFnJSON(row)
 }
 
 function onDelete(row) {
-  restrictionToDelete.value = cloneFnJSON(row)
+  priceRuleToDelete.value = cloneFnJSON(row)
 }
 
 function onCreate() {
-  restrictionToCreate.value = {
+  priceRuleToCreate.value = {
+    priceAdjustment: null,
     dependentOption: { id: "" },
-    blockedOption: { id: "" },
+    baseOption: { id: "" },
   }
 }
 
 function createEntity() {
-  createRestriction({
-    dependentOption: restrictionToCreate.value.dependentOption.id,
-    blockedOption: restrictionToCreate.value.blockedOption.id,
-  }).then(() => (restrictionToCreate.value = null))
+  createPriceRule({
+    dependentOption: priceRuleToCreate.value.dependentOption.id,
+    blockedOption: priceRuleToCreate.value.blockedOption.id,
+  }).then(() => (priceRuleToCreate.value = null))
 }
 
 function updateEntity() {
-  editRestriction({
-    restriction: restrictionToEdit.value.id,
-    dependentOption: restrictionToEdit.value.dependenOption.id,
-    blockedOption: restrictionToEdit.value.blockedOption.id,
-  }).then(() => (restrictionToEdit.value = null))
+  editPriceRule({
+    priceRule: priceRuleToEdit.value.id,
+    dependentOption: priceRuleToEdit.value.dependenOption.id,
+    blockedOption: priceRuleToEdit.value.blockedOption.id,
+  }).then(() => (priceRuleToEdit.value = null))
 }
 
 function deleteEntity() {
-  deleteRestriction({ restriction: restrictionToDelete.value.id }).then(() => (restrictionToDelete.value = null))
+  deletePriceRule({ priceRule: priceRuleToDelete.value.id }).then(() => (priceRuleToDelete.value = null))
 }
 </script>
 
 <template>
   <ManagerWrapper>
-    <ManagerTitle title="Restrictions" />
-    <ManagerTable :rows="restrictions" @edit="onEdit" @delete="onDelete">
+    <ManagerTitle title="Price Rules" />
+    <ManagerTable :rows="priceRules" @edit="onEdit" @delete="onDelete">
       <template #tableHeader>
-        <th class="w-1/2">Dependent option</th>
-        <th class="w-1/2">Blocked option</th>
+        <th class="w-1/3">Option</th>
+        <th class="w-1/3">Option</th>
+        <th class="w-1/3">Price Adjustment</th>
       </template>
       <template #tableRow="{ row }">
+        <td class="text-center">{{ row.baseOption.name }}</td>
         <td class="text-center">{{ row.dependentOption.name }}</td>
-        <td class="text-center">{{ row.blockedOption.name }}</td>
+        <td class="text-center">{{ row.priceAdjustment }}</td>
       </template>
     </ManagerTable>
-    <AppButton text="Add new restriction" class="ml-auto mr-2 mb-2" @click="onCreate" />
+    <AppButton text="Add new price rule" class="ml-auto mr-2 mb-2" @click="onCreate" />
   </ManagerWrapper>
-  <UpsertModal v-if="!!restrictionToCreate" @close="restrictionToCreate = null" v-model="restrictionToCreate" @save="createEntity" />
-  <UpsertModal v-if="!!restrictionToEdit" @close="restrictionToEdit = null" v-model="restrictionToEdit" @save="updateEntity" />
-  <AppDeleteModal :entity-name="restrictionToDelete.name" v-if="!!restrictionToDelete" @close="restrictionToDelete = null" @delete="deleteEntity" />
+  <UpsertModal v-if="!!priceRuleToCreate" @close="priceRuleToCreate = null" v-model="priceRuleToCreate" @save="createEntity" />
+  <UpsertModal v-if="!!priceRuleToEdit" @close="priceRuleToEdit = null" v-model="priceRuleToEdit" @save="updateEntity" />
+  <AppDeleteModal :entity-name="priceRuleToDelete.name" v-if="!!priceRuleToDelete" @close="priceRuleToDelete = null" @delete="deleteEntity" />
 </template>

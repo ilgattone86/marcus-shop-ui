@@ -10,12 +10,12 @@ const model = defineModel()
 
 const { partOptions } = usePartOptions()
 
-const dependentOptions = computed(() => {
-  return partOptions.value.filter((partOption) => partOption.id !== model.value.blockedOption)
+const baseOptions = computed(() => {
+  return partOptions.value.filter((partOption) => partOption.id !== model.value.dependentOption.id)
 })
 
-const blockedOptions = computed(() => {
-  return partOptions.value.filter((partOption) => partOption.id !== model.value.dependentOption)
+const dependentOptions = computed(() => {
+  return partOptions.value.filter((partOption) => partOption.id !== model.value.baseOption.id)
 })
 </script>
 
@@ -23,17 +23,21 @@ const blockedOptions = computed(() => {
   <AppModal @close="emits('close')">
     <div class="flex flex-col gap-4 w-sm">
       <section>
-        <label for="dependent-option">Dependent option:</label>
-        <select id="dependent-option" class="py-1 px-2 w-full border rounded border-slate-500" v-model="model.dependentOption.id">
-          <option value="" selected disabled hidden>Choose a dependent option</option>
-          <option v-for="partOption in dependentOptions" :key="partOption.id" :value="partOption.id">{{ partOption.name }}</option>
+        <label for="price-adjustment">Price adjustment:</label>
+        <input type="number" id="price-adjustment" class="py-1 px-2 w-full border rounded border-slate-500" v-model="model.priceAdjustment" placeholder="Choose a price adjustment" />
+      </section>
+      <section>
+        <label for="base-option">Option:</label>
+        <select id="base-option" class="py-1 px-2 w-full border rounded border-slate-500" v-model="model.baseOption.id">
+          <option value="" selected disabled hidden>Choose an option</option>
+          <option v-for="partOption in baseOptions" :key="partOption.id" :value="partOption.id">{{ partOption.name }}</option>
         </select>
       </section>
       <section>
-        <label for="blocked-option">Blocked option:</label>
-        <select id="blocked-option" class="py-1 px-2 w-full border rounded border-slate-500" v-model="model.blockedOption.id">
-          <option value="" selected disabled hidden>Choose a blocked option</option>
-          <option v-for="partOption in blockedOptions" :key="partOption.id" :value="partOption.id">{{ partOption.name }}</option>
+        <label for="dependent-option">Option:</label>
+        <select id="dependent-option" class="py-1 px-2 w-full border rounded border-slate-500" v-model="model.dependentOption.id">
+          <option value="" selected disabled hidden>Choose a dependent option</option>
+          <option v-for="partOption in dependentOptions" :key="partOption.id" :value="partOption.id">{{ partOption.name }}</option>
         </select>
       </section>
       <AppButton text="Save restriction" class="ml-auto" @click="emits('save')" />
